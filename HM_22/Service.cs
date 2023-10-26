@@ -113,5 +113,28 @@ namespace HM_22
                 }
             }
         }
+        public void GetAllSms()
+        {
+            using (SqlConnection connection = new SqlConnection("Server=(localdb)\\MSSQLLocalDB;Database=HM_22;Trusted_Connection=True;"))
+            {
+                connection.Open();
+                var query = $"Select * from dbo.SMS;";
+                var command = new SqlCommand(query, connection);
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        var c = reader.FieldCount;
+                        ///column sonini bilish
+                        Console.WriteLine("sms_ID Sender_ID Recipient_ID Message");
+                        for (int i = 0; i < c; i++)
+                        {
+                            Console.Write(reader[i] + "\t");
+                        }
+                        Console.WriteLine();
+                    }
+                }
+            }
+        }
     }
 }
